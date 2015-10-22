@@ -1,4 +1,4 @@
-import qualified Data.ByteString.Lazy as B
+import qualified Data.ByteString.Lazy.Char8 as B
 import Network.HTTP.Conduit (simpleHttp)
 import System.IO
 import Data.Text
@@ -12,6 +12,7 @@ getJSON jsonURL = simpleHttp jsonURL
 main = do
 
   apiKeyData <- readFile "jcdecaux.key"
-  let apiKey = head $ lines $ apiKeyData
+  let apiKey = Prelude.head $ Prelude.lines $ apiKeyData
   let testStationUrl = stationUrl apiKey "31705"
-  getJSON testStationUrl
+  result <- getJSON testStationUrl
+  B.putStrLn result
